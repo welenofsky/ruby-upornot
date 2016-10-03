@@ -4,18 +4,22 @@ require_relative '../check_server'
 class TestCheckServer < Minitest::Test
 
 	def test_good_server_name
-		assert_match('Online', check_server('google.com'))
+		$output = `ruby ../upornot.rb --server google.com`;
+		assert_match('Online', $output)
 	end
 
 	def test_good_ip
-		assert_match('Online', check_server('8.8.8.8'))
+		$output = `ruby ../upornot.rb --server 8.8.8.8`;
+		assert_match('Online', $output)
 	end
 
 	def test_bad_server_name
-		assert_match('Offline', check_server('nowaythisisarealservername.kjkjkj'))
+		$output = `ruby ../upornot.rb --server nowaythisisarealservername.kjkjkj`;
+		assert_match('Offline', $output)
 	end
 
 	def test_bad_ip
-		assert_match('Offline', check_server('256.256.256.256'))
+		$output = `ruby ../upornot.rb --server 256.256.256.256`;
+		assert_match('Offline', $output)
 	end
 end

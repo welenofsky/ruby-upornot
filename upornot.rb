@@ -1,7 +1,8 @@
+require 'socket'
 require 'optparse'
 require 'optparse/time'
 require 'ostruct'
-require './check_server'
+#require './check_server'
 
 class OptparseExample
 
@@ -54,6 +55,15 @@ class OptparseExample
 end  # class OptparseExample
 
 options = OptparseExample.parse(ARGV)
+
+def check_server(server)
+	begin
+		Socket.gethostbyname(server)
+		"Online #{Time.now}"
+	rescue SocketError
+		"Offline: Error connecting to host: #{server} at #{Time.now}"
+	end
+end
 
 loop do
 	puts check_server(options[:server])
